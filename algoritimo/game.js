@@ -11,6 +11,8 @@ class Game {
 	this.testador = this.posicaoInicio.testador;
         this.m = this.posicaoInicio.referencia;
 	this.proximaInvercao = this.calcProximaInvercao();
+
+        // console.log(this)
     }
 
     calcProximaInvercao() {

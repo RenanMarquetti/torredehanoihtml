@@ -49,8 +49,10 @@ class PosicaoTorre {
 		pilhaFinal = isDefinirBase ? discoAtualFinal.pilha : values.base[discoAnalisado] ? pilhaFinal : 3-pilhaInicial-pilhaFinal;
 		pilhaInicial = discoAtualInicial.pilha;
 		values.base[discoAnalisado-1] = pilhaInicial == pilhaFinal;
+		// console.log({discoAnalisado, base: values.base[discoAnalisado-1], pilhaInicial, pilhaFinal, isBase: pilhaInicial == pilhaFinal})
 		
 		if(isDefinirBase) isDefinirBase = values.base[discoAnalisado-1] && discoAtualInicial.pilha == discoAtualFinal.pilha && discoAtualInicial.altura == discoAtualFinal.altura;
+		// console.log({isDefinirBase})
 
 	    } else {
 	
