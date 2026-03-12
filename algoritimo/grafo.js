@@ -44,6 +44,10 @@ class Grafo {
 			noAnterior = noAnterior.noAnterior;
 		}
 
+		if (movimentos.length == 0) {
+			return '';
+		}
+
 		return movimentos.reverse().map(m => m + " ").reduce((v1, v2) => v1 + v2);
 	}
 
@@ -54,6 +58,9 @@ class Grafo {
 
 	resetBalanceGrafo() {
 		this.noBalance = null;
-		this.grafo.values().foreach(n => n.resetBalance());
+		const values = this.grafo.values();
+		if (values.length > 0) {
+			values.t.foreach(n => n.resetBalance());
+		}
 	}
 }
