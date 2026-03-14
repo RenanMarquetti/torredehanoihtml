@@ -3,8 +3,8 @@ class No {
 		this.grafo = grafo;
 		this.posicao = posicao;
 		this.arestas = new Map();
-		this.calculouProximasPosicoes = false;
 
+		this.calculouProximasPosicoes = false;
 		this.distancia = Number.MAX_SAFE_INTEGER
 		this.movimentoRealizado = null;
 		this.noAnterior = null;
@@ -21,7 +21,13 @@ class No {
 			this.noAnterior = noAnterior;
 			this.distancia = noAnterior.distancia + 1
 			this.movimentoRealizado = movimentoRealizado;
-			this.arestas.forEach((n, m) => n.calculateDistanceByNo(m, this));
+			for (const aresta of this.arestas) {
+				const movimento = aresta[0];
+				const no = aresta[1];
+
+				no.calculateDistanceByNo(movimento, this);
+			}
+
 		}
 	}
 

@@ -31,8 +31,13 @@ class Grafo {
 	balanceGrafoByNotacao(notacao) {
 		const noBalance = this.grafo.get(notacao);
 		this.noBalance = noBalance;
-		noBalance.distancia = 0;
-		noBalance.arestas.forEach((n, m) => n.calculateDistanceByNo(m, noBalance));
+		this.noBalance.distancia = 0;
+		for (const aresta of this.noBalance.arestas) {
+			const movimento = aresta[0];
+			const no = aresta[1];
+
+			no.calculateDistanceByNo(movimento, this.noBalance);
+		}
 	}
 
 	getPatchByNotacao(notacao) {
@@ -40,7 +45,9 @@ class Grafo {
 		let noAnterior = this.grafo.get(notacao);
 
 		while (noAnterior) {
-			if (noAnterior.movimentoRealizado) movimentos.push(noAnterior.movimentoRealizado)
+			if (noAnterior.movimentoRealizado) {
+				movimentos.push(noAnterior.movimentoRealizado)
+			}
 			noAnterior = noAnterior.noAnterior;
 		}
 
@@ -59,8 +66,8 @@ class Grafo {
 	resetBalanceGrafo() {
 		this.noBalance = null;
 		const values = this.grafo.values();
-		if (values.length > 0) {
-			values.t.foreach(n => n.resetBalance());
+		for (const value of values) {
+			value.resetBalance();
 		}
 	}
 }

@@ -67,23 +67,18 @@ const teste2 = () => {
 
 const testGrafo = (qtdDisco = 1) => {
 	const grafoGame = new Grafo(qtdDisco);
-
 	const posicoes = [...grafoGame.grafo.keys()];
-	console.log({ posicoes })
 
 	let results = new Map();
 
 	for (const init of posicoes) {
+		grafoGame.resetBalanceGrafo();
 		grafoGame.balanceGrafoByNotacao(init)
 		for (const fim of posicoes) {
 			results.set(init + fim, grafoGame.getPatchByNotacao(fim).trim());
 		}
-		grafoGame.resetBalanceGrafo();
 	}
 
-	console.log({ posicoes, results });
-
 	testPosicoes(posicoes, results);
-
 }
 
