@@ -1,4 +1,5 @@
 const testPosicoes = (posicoes, results, grafoGame) => {
+	const errors = [];
 	for (let x = 0; x < posicoes.length; x++) {
 		for (let y = 0; y < posicoes.length; y++) {
 			const posicaoInicial = posicoes[x];
@@ -23,14 +24,16 @@ const testPosicoes = (posicoes, results, grafoGame) => {
 				if (isCorrectLength && isCorrectPosicaoFinal) {
 					continue;
 				}
-				console.log({ game: notacao, isCorrectLength, expect, res, isCorrectPosicaoFinal, posicaoFinal, posicaoFinalByPath });
+				errors.push({ game: notacao, isCorrectLength, expect, res, isCorrectPosicaoFinal, posicaoFinal, posicaoFinalByPath });
 
 			};
 		}
 	}
+
+	return errors;
 }
 
-const testGrafo = (qtdDisco = 1) => {
+const testGrafo = (qtdDisco = 1, lambdaFilter = (e) => true) => {
 	const grafoGame = new Grafo(qtdDisco);
 	const posicoes = [...grafoGame.grafo.keys()];
 
@@ -44,6 +47,8 @@ const testGrafo = (qtdDisco = 1) => {
 		}
 	}
 
-	testPosicoes(posicoes, results, grafoGame);
+	const errors = testPosicoes(posicoes, results, grafoGame).filter(lambdaFilter);
+	console.log(errors);
+
 }
 
