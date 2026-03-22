@@ -70,4 +70,21 @@ class Grafo {
 			value.resetBalance();
 		}
 	}
+
+	caminhe(no, path, index) {
+		// console.log({ no, path, "path.length": path.length, index, "index == path.length": index == path.length })
+		if (index == path.length) return no;
+
+		const noAfter = no.arestas.get(path[index]);
+		index++
+		return this.caminhe(noAfter, path, index);
+
+	}
+
+	getPosicaoByPath(notacaoInicio, path) {
+		const noInicio = this.grafo.get(notacaoInicio);
+		const pathArray = path.split(" ");
+		// console.log({ noInicio, pathArray })
+		return this.caminhe(noInicio, pathArray, 0).posicao;
+	}
 }

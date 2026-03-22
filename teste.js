@@ -1,4 +1,4 @@
-const testPosicoes = (posicoes, results) => {
+const testPosicoes = (posicoes, results, grafoGame) => {
 	for (let x = 0; x < posicoes.length; x++) {
 		for (let y = 0; y < posicoes.length; y++) {
 			const posicaoInicial = posicoes[x];
@@ -7,62 +7,27 @@ const testPosicoes = (posicoes, results) => {
 			const res = game.getResult().trim();
 			const expect = results.get(posicoes[x] + posicoes[y]);
 			const notacao = posicaoInicial + " -> " + posicaoFinal;
-			if (res != expect) console.log({ game: notacao, expect, res });
+			if (res != expect) {
+
+				const resLength = res.split(" ").length
+				const expectLength = expect.split(" ").length
+				const isCorrectLength = resLength == expectLength;
+
+				//console.log({ resLength, expectLength });
+
+				const posicaoFinalByPath = grafoGame.getPosicaoByPath(posicaoInicial, res).notacao;
+				const isCorrectPosicaoFinal = posicaoFinalByPath === posicaoFinal;
+
+				// console.log({ posicaoFinalByPath, isCorrectPosicaoFinal })
+
+				if (isCorrectLength && isCorrectPosicaoFinal) {
+					continue;
+				}
+				console.log({ game: notacao, isCorrectLength, expect, res, isCorrectPosicaoFinal, posicaoFinal, posicaoFinalByPath });
+
+			};
 		}
 	}
-}
-
-const teste1 = () => {
-	let posicoes = ["1|0|0|", "0|1|0|", "0|0|1|"];
-
-	let results = new Map();
-	results.set(posicoes[0] + posicoes[0], "");
-	results.set(posicoes[0] + posicoes[1], "1D");
-	results.set(posicoes[0] + posicoes[2], "1E");
-	results.set(posicoes[1] + posicoes[0], "1E");
-	results.set(posicoes[1] + posicoes[1], "");
-	results.set(posicoes[1] + posicoes[2], "1D");
-	results.set(posicoes[2] + posicoes[0], "1D");
-	results.set(posicoes[2] + posicoes[1], "1E");
-	results.set(posicoes[2] + posicoes[2], "");
-
-	console.log({ posicoes, results });
-	testPosicoes(posicoes, results);
-}
-
-const teste2 = () => {
-	let posicoes = [
-		"1:2|0|0|", "2|1|0|", "2|0|1|",
-		"1|2|0|", "0|1:2|0|", "0|2|1|",
-		"1|0|2|", "0|1|2|", "0|0|1:2|"
-	];
-
-	let results = new Map();
-	results.set(posicoes[0] + posicoes[0], "");
-	results.set(posicoes[0] + posicoes[1], "1D");
-	results.set(posicoes[0] + posicoes[2], "1E");
-
-	results.set(posicoes[0] + posicoes[3], "1E 2D 1D");
-	results.set(posicoes[0] + posicoes[4], "1E 2D 1E");
-	results.set(posicoes[0] + posicoes[5], "1E 2D");
-
-	results.set(posicoes[0] + posicoes[6], "1D 2E 1E");
-	results.set(posicoes[0] + posicoes[7], "1D 2E");
-	results.set(posicoes[0] + posicoes[8], "1D 2E 1D");
-
-
-
-
-
-	/*
-	results.set(posicoes[1]+posicoes[0], "1E");
-	results.set(posicoes[1]+posicoes[1], "");
-	results.set(posicoes[1]+posicoes[2], "1D");
-	results.set(posicoes[2]+posicoes[0], "1D");
-	results.set(posicoes[2]+posicoes[1], "1E");
-	results.set(posicoes[2]+posicoes[2], "");
-    */
-	testPosicoes(posicoes, results);
 }
 
 const testGrafo = (qtdDisco = 1) => {
@@ -79,6 +44,6 @@ const testGrafo = (qtdDisco = 1) => {
 		}
 	}
 
-	testPosicoes(posicoes, results);
+	testPosicoes(posicoes, results, grafoGame);
 }
 
