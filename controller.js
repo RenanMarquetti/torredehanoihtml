@@ -5,28 +5,28 @@ let torre
 let game
 
 function initTorre() {
-    montarTorre()
-    iniciar()
+	//montarTorre()
+	//iniciar()
 }
 
 function montarTorre() {
-    let inicio = document.getElementById("inicio").value
-    let fim = document.getElementById("fim").value
+	let inicio = document.getElementById("inicio").value
+	let fim = document.getElementById("fim").value
 
-    game = new Game(inicio, fim);
-    document.getElementById("sequencia").innerHTML = game.getResult();
+	game = new Game(inicio, fim);
+	document.getElementById("sequencia").innerHTML = game.getResult();
 
-    torre = new Torre(ctx, 100, 450, 750, 250, game.qtdDisco, inicio);
-    torre.desenhar();
+	torre = new Torre(ctx, 100, 450, 750, 250, game.qtdDisco, inicio);
+	torre.desenhar();
 }
 
 function iniciar() {
-    montarTorre();
-    torre.calcularSequencia(document.getElementById("sequencia").innerText)
+	montarTorre();
+	torre.calcularSequencia(document.getElementById("sequencia").innerText)
 }
 
 function insert(id) {
-    const value = document.getElementById("select"+id).value
-    document.getElementById(id).value = value;
-    montarTorre();
+	const value = document.getElementById("select" + id).value
+	document.getElementById(id).value = value;
+	montarTorre();
 }

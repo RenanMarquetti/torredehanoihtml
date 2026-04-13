@@ -54,7 +54,7 @@ const testGrafo = (qtdDisco = 1, lambdaFilter = (e) => true) => {
 	}
 
 	const errors = testPosicoes(posicoes, results, grafoGame).filter(lambdaFilter);
-	console.log(errors);
+	console.log({ errors });
 
 }
 
@@ -63,7 +63,7 @@ const testGrafoByGame = (qtdDisco = 1, notacaoGame) => {
 	const init = game[0]
 	const fim = game[2]
 
-	console.log({ game, init, fim });
+	// console.log({ game, init, fim });
 
 	const grafoGame = new Grafo(qtdDisco);
 
@@ -75,6 +75,6 @@ const testGrafoByGame = (qtdDisco = 1, notacaoGame) => {
 	console.log({ results });
 
 	const errors = testPosicao(init, fim, results, grafoGame);
-	console.log(errors);
+	console.log({ errors });
 }
 

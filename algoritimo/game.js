@@ -12,7 +12,10 @@ class Game {
 		this.m = this.posicaoInicio.referencia;
 		this.proximaInvercao = this.calcProximaInvercao();
 
-		// console.log(this)
+		console.log({ game: this })
+		console.log({ orientacaoPosicaoInicio: [...this.posicaoInicio.orientacao] })
+		console.log({ orientacaoPosicaoFinal: [...this.posicaoFinal.orientacao] })
+		// Object.freeze(this.posicaoInicio.orientacao);
 	}
 
 	calcProximaInvercao() {
@@ -39,22 +42,19 @@ class Game {
 		let disco = this.m.toString(2).padStart(this.qtdDisco, "0").split("").reverse().indexOf("0") + 1;
 		let direcao = disco % 2 != this.testador;
 		let indexOrientacao = this.qtdDisco - disco;
-		//console.log({ disco, testador: this.testador, direcao });
+		console.log({ disco, testador: this.testador, direcao });
 		const orientacaoInicial = [...this.posicaoInicio.orientacao];
 
-		//console.log({ "orientacaoInicial": orientacaoInicial })
-		//console.log({ "orientacaoInicial[0]": orientacaoInicial[0] })
-		//console.log({ "orientacaoInicial[1]": orientacaoInicial[1] })
-
-		//console.log({ indexOrientacao, "this.posicaoInicio.orientacao[indexOrientacao]": this.posicaoInicio.orientacao[indexOrientacao] })
+		console.log({ indexOrientacao, "orientacaoInicial[indexOrientacao]": orientacaoInicial[indexOrientacao] })
 
 		if (orientacaoInicial[indexOrientacao] != null && orientacaoInicial[indexOrientacao]) {
-			//console.log("invertendo direção: ");
+			console.log("invertendo direção: ");
 			direcao = !direcao;
-			//console.log({ direcao })
+			console.log({ direcao })
 			for (let c = indexOrientacao; c < this.qtdDisco; c++) this.posicaoInicio.orientacao[c] = !this.posicaoInicio.orientacao[c];
 		}
 
+		console.log({ m: this.m, proximaInvercao: this.proximaInvercao, indexOrientacao, 'this.posicaoFinal.orientacao.length': this.posicaoFinal.orientacao.length, "this.m + 1 == this.proximaInvercao && indexOrientacao + 1 < this.posicaoFinal.orientacao.length": this.m + 1 == this.proximaInvercao && indexOrientacao + 1 < this.posicaoFinal.orientacao.length })
 		if (this.m + 1 == this.proximaInvercao && indexOrientacao + 1 < this.posicaoFinal.orientacao.length) {
 			let i = indexOrientacao;
 			let d = disco + 1;
@@ -67,6 +67,7 @@ class Game {
 			} while (b == null && i + 1 < this.posicaoFinal.orientacao.length);
 
 			if (b != null) {
+				console.log({ b, indexOrientacao, qtdDisco: this.qtdDisco })
 				for (let c = indexOrientacao; c < this.qtdDisco; c++) {
 					this.posicaoInicio.orientacao[c] = this.posicaoFinal.orientacao[i];
 				}
@@ -75,6 +76,7 @@ class Game {
 		}
 
 		this.m++;
+		console.log(disco.toString() + (direcao ? "D" : "E"))
 		return disco.toString() + (direcao ? "D" : "E");
 	}
 }

@@ -51,7 +51,10 @@ class PosicaoTorre {
 				values.base[discoAnalisado - 1] = pilhaInicial == pilhaFinal;
 				// console.log({discoAnalisado, base: values.base[discoAnalisado-1], pilhaInicial, pilhaFinal, isBase: pilhaInicial == pilhaFinal})
 
-				if (isDefinirBase) isDefinirBase = values.base[discoAnalisado - 1] && discoAtualInicial.pilha == discoAtualFinal.pilha && discoAtualInicial.altura == discoAtualFinal.altura;
+				if (isDefinirBase) {
+					this.testador = discoAnalisado % 2;
+					isDefinirBase = values.base[discoAnalisado - 1] && discoAtualInicial.pilha == discoAtualFinal.pilha && discoAtualInicial.altura == discoAtualFinal.altura;
+				}
 				// console.log({isDefinirBase})
 
 			} else {
@@ -63,6 +66,8 @@ class PosicaoTorre {
 					values.base[discoAnalisado - 1] = true;
 					pilhaInicial = discoAtualInicial.pilha;
 					pilhaFinal = discoAtualFinal.pilha;
+					this.testador = discoAnalisado % 2;
+					discoAnteriorFinal = null;
 					isDefinirBase = pilhaInicial == pilhaFinal;
 				} else {
 					let colunaIntermediaria = 3 - pilhaInicial - pilhaFinal;
@@ -79,13 +84,14 @@ class PosicaoTorre {
 			posicaoAposMovimentoNatural = (pilhaInicial + (discoAnalisado % 2 == this.testador ? 2 : 1)) % 3;
 
 			if (tipo == "INICIAL") {
-				//console.log({ discoAnalisado, pilhaFinal, posicaoAposMovimentoNatural, pilhaFinal })
+				console.log({ discoAnalisado, pilhaFinal, "pilhaInicial != pilhaFinal": pilhaInicial != pilhaFinal, posicaoAposMovimentoNatural, pilhaFinal, "posicaoAposMovimentoNatural != pilhaFinal": posicaoAposMovimentoNatural != pilhaFinal })
 				values.orientacao[discoAnalisado - 1] = pilhaInicial != pilhaFinal && posicaoAposMovimentoNatural != pilhaFinal;
 			} else {
 				let hasteOrigem;
 				let hasteAposMovimento;
 				let hasteFinal;
 
+				console.log({ discoAnteriorFinal })
 				if (discoAnteriorFinal == null) {
 
 					hasteOrigem = discoAtualInicial.pilha;
@@ -93,12 +99,14 @@ class PosicaoTorre {
 					hasteFinal = discoAtualFinal.pilha;
 				} else {
 					hasteOrigem = manter ? hasteOrigemAnterior : 3 - discoAnteriorFinal.pilha - hasteOrigemAnterior;
+					console.log({ discoAnalisado, testador: this.testador, "(discoAnalisado % 2 == this.testador ? 2 : 1)": (discoAnalisado % 2 == this.testador ? 2 : 1), "hasteOrigem + (discoAnalisado % 2 == this.testador ? 2 : 1)": hasteOrigem + (discoAnalisado % 2 == this.testador ? 2 : 1) })
 					hasteAposMovimento = (hasteOrigem + (discoAnalisado % 2 == this.testador ? 2 : 1)) % 3;
 					hasteFinal = discoAtualFinal.pilha;
 
 				}
 
 				manter = hasteFinal == hasteOrigem;
+				console.log({ discoAnalisado, hasteOrigem, manter, hasteAposMovimento, hasteFinal });
 				values.orientacao[discoAnalisado - 1] = manter ? null : hasteAposMovimento != hasteFinal;
 
 				discoAnteriorFinal = discoAtualFinal;
